@@ -1,3 +1,10 @@
 project(rpg_model)
 
-add_library(rpg_cpp CoreItem.cpp Hero.cpp)
+set(${PROJECT_NAME}_SOURCES CoreItem.cpp Hero.cpp)
+
+if (BUILD_SHARED_LIBS)
+    add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SOURCES})
+    add_compile_definitions(RPG_BUILD)
+else()
+    add_library(rpg_cpp STATIC ${${PROJECT_NAME}_SOURCES})
+endif()

@@ -4,11 +4,12 @@
 
 #pragma once
 
+#include "RPG_global.h"
 #include <string>
 
 namespace RPG {
 
-    class CoreItem {
+    class RPG_API CoreItem {
     public:
         CoreItem(size_t id, std::string_view name);
         virtual ~CoreItem();

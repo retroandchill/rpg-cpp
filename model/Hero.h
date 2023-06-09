@@ -8,11 +8,11 @@
 
 namespace RPG {
 
-    class Hero : public CoreItem {
+    class RPG_API Hero : public CoreItem {
     public:
 
     private:
-        
+
     };
 
 } // RPG
