@@ -9,10 +9,6 @@ RPG::Class::Class(size_t id, std::string_view name) : CoreItem(id, name)
 {
 }
 
-RPG::Class::Class(size_t id, std::string_view name, const RPG::StatBlock &statBlock) : CoreItem(id, name), m_statBlock(statBlock)
-{
-}
-
 RPG::Class::Class(size_t id, std::string_view name, RPG::StatBlock &&statBlock) : CoreItem(id, name), m_statBlock(std::move(statBlock))
 {
 }

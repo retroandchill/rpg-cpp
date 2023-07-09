@@ -3,22 +3,18 @@
 //
 #include "CoreItem.h"
 
-namespace RPG {
-    CoreItem::CoreItem(size_t id, std::string_view name) : m_id(id), m_name(name) {
+RPG::CoreItem::CoreItem(size_t id, std::string_view name) : m_id(id), m_name(name)
+{
+}
 
-    }
+RPG::CoreItem::~CoreItem() = default;
 
-    CoreItem::~CoreItem() = default;
+size_t RPG::CoreItem::getId() const
+{
+    return m_id;
+}
 
-    size_t CoreItem::getId() const
-    {
-        return m_id;
-    }
-
-    std::string_view CoreItem::getName() const
-    {
-        return m_name;
-    }
-
-
-} // RPG
+std::string_view RPG::CoreItem::getName() const
+{
+    return m_name;
+}

@@ -14,7 +14,6 @@ namespace RPG
     {
       public:
         Class(size_t id, std::string_view name);
-        Class(size_t id, std::string_view name, const StatBlock &statBlock);
         Class(size_t id, std::string_view name, StatBlock &&statBlock);
         ~Class() override;
 
@@ -24,4 +23,4 @@ namespace RPG
       private:
         std::optional<StatBlock> m_statBlock;
     };
-}
+} // namespace RPG
