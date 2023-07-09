@@ -1,7 +1,6 @@
 //
 // Created by fcors on 6/9/2023.
 //
-
 #pragma once
 
 #include "RPG_global.h"
@@ -13,6 +12,9 @@ namespace RPG {
     public:
         CoreItem(size_t id, std::string_view name);
         virtual ~CoreItem();
+
+        size_t getId() const;
+        std::string_view getName() const;
 
     private:
         size_t m_id;

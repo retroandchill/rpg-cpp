@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.25)
 project(rpg-cpp)
 
+set(CMAKE_CXX_STANDARD 17)
+
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
     set(RPG_STANDALONE ON)
 else()
@@ -22,6 +24,5 @@ if (BUILD_SHARED_LIBS)
     add_compile_definitions(RPG_SHARED)
 endif()
 
-set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(model)

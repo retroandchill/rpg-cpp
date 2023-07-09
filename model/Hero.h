@@ -1,18 +1,31 @@
 //
 // Created by fcors on 6/9/2023.
 //
-
 #pragma once
 
 #include "CoreItem.h"
+#include "Stats.h"
 
-namespace RPG {
+#include <optional>
 
-    class RPG_API Hero : public CoreItem {
-    public:
+namespace RPG
+{
 
-    private:
+    class RPG_API Hero : public CoreItem, public ILevelable
+    {
+      public:
+        Hero(size_t id, std::string_view name, size_t classId);
+        Hero(size_t id, std::string_view name, size_t classId, const StatBlock &statBlock);
+        Hero(size_t id, std::string_view name, size_t classId, StatBlock &&statBlock);
 
+        size_t getClassId() const;
+        bool hasStatBlock() const final;
+        const StatBlock &getStatBlock() const final;
+
+
+      private:
+        size_t m_classId;
+        std::optional<StatBlock> m_statBlock;
     };
 
-} // RPG
+} // namespace RPG

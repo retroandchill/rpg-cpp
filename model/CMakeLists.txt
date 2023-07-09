@@ -1,6 +1,6 @@
 project(rpg_model)
 
-set(${PROJECT_NAME}_SOURCES CoreItem.cpp Hero.cpp)
+set(${PROJECT_NAME}_SOURCES CoreItem.cpp Hero.cpp Stats.cpp Class.cpp)
 
 if (BUILD_SHARED_LIBS)
     add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SOURCES})
