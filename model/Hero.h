@@ -17,6 +17,7 @@ namespace RPG
         Hero(size_t id, std::string_view name, size_t classId);
         Hero(size_t id, std::string_view name, size_t classId, const StatBlock &statBlock);
         Hero(size_t id, std::string_view name, size_t classId, StatBlock &&statBlock);
+        ~Hero() override;
 
         size_t getClassId() const;
         bool hasStatBlock() const final;

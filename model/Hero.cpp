@@ -20,6 +20,8 @@ namespace RPG {
     {
     }
 
+    Hero::~Hero() = default;
+
     size_t Hero::getClassId() const
     {
         return m_classId;
