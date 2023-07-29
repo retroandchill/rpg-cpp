@@ -8,3 +8,5 @@ if (BUILD_SHARED_LIBS)
 else()
     add_library(rpg_cpp STATIC ${${PROJECT_NAME}_SOURCES})
 endif()
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

@@ -5,6 +5,8 @@
 
 #include <stdexcept>
 
+RPG::StatCurve::~StatCurve() = default;
+
 RPG::StatBlock::StatBlock(StatBlock::Curves &&stats) : m_stats(std::move(stats))
 {
 }

@@ -22,7 +22,7 @@ namespace RPG
         Spd = 6
     };
 
-    class StatCurve
+    class RPG_API StatCurve
     {
       public:
         virtual ~StatCurve() = 0;

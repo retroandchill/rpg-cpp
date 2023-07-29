@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.25)
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 project(rpg-cpp)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -24,10 +26,18 @@ if (BUILD_SHARED_LIBS)
     add_compile_definitions(RPG_SHARED)
 endif()
 
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out CACHE STRING "" )
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out CACHE STRING "" )
 
 add_subdirectory(model)
 
-option(BUILD_TESTS "rpg-cpp: build the tests for the project" ON)
-if (BUILD_TESTS)
+option(BUILD_TESTING "rpg-cpp: build the tests for the project" ON)
+if (BUILD_TESTING)
+    enable_testing()
+    include(CTest)
+
     find_package(Catch2 REQUIRED)
+    include(Catch)
+
+    add_subdirectory(test)
 endif()
