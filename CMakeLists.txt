@@ -26,3 +26,8 @@ endif()
 
 
 add_subdirectory(model)
+
+option(BUILD_TESTS "rpg-cpp: build the tests for the project" ON)
+if (BUILD_TESTS)
+    find_package(Catch2 REQUIRED)
+endif()
