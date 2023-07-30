@@ -10,7 +10,7 @@ class MockStatCurve1 : public RPG::StatCurve {
   DECLARE_STAT_CURVE
 
 public:
-  explicit MockStatCurve1(uint8_t stat) : RPG::StatCurve(stat) {}
+  using StatCurve::StatCurve;
   ~MockStatCurve1() override = default;
 
   uint32_t calculateStatValue(uint32_t level) const override {
@@ -24,7 +24,7 @@ class MockStatCurve2 : public RPG::StatCurve {
   DECLARE_STAT_CURVE
 
 public:
-  explicit MockStatCurve2(uint8_t stat) : RPG::StatCurve(stat) {}
+  using StatCurve::StatCurve;
   ~MockStatCurve2() override = default;
 
   uint32_t calculateStatValue(uint32_t level) const override {
