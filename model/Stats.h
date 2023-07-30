@@ -8,6 +8,8 @@
 #include <cstdint>
 #include <map>
 #include <memory>
+#include <string>
+#include <functional>
 
 namespace RPG
 {
@@ -23,8 +25,13 @@ namespace RPG
     class RPG_API StatCurve
     {
       public:
+        explicit StatCurve(uint8_t stat);
         virtual ~StatCurve() = 0;
-        virtual uint32_t getStat(uint32_t level) const = 0;
+        uint8_t getStat() const;
+        virtual uint32_t calculateStatValue(uint32_t level) const = 0;
+
+      private:
+        uint8_t m_stat;
     };
 
     class RPG_API StatBlock
@@ -50,5 +57,21 @@ namespace RPG
         virtual ~ILevelable() = 0;
         virtual bool hasStatBlock() const = 0;
         virtual const StatBlock &getStatBlock() const = 0;
+    };
+
+    class RPG_API StatRegistry {
+      private:
+        StatRegistry();
+
+      public:
+        using CurveCreator = std::function<std::unique_ptr<StatCurve>(uint8_t)>;
+
+        static StatRegistry &getInstance();
+
+        void registerStatCurve(std::string_view key, const CurveCreator &creatorFunction);
+        std::unique_ptr<RPG::StatCurve> createStatCurve(std::string_view key, uint8_t stat) const;
+
+      private:
+        std::map<std::string, CurveCreator, std::less<>> m_registeredCurves;
     };
 } // namespace RPG

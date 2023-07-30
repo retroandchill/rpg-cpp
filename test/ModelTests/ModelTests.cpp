@@ -6,14 +6,59 @@
 #include "Hero.h"
 #include "Class.h"
 
-class MockStatCurve : public RPG::StatCurve {
+class MockStatCurve1 : public RPG::StatCurve {
 public:
-  ~MockStatCurve() override = default;
+  explicit MockStatCurve1(uint8_t stat) : RPG::StatCurve(stat) {}
+  ~MockStatCurve1() override = default;
 
-  uint32_t getStat(uint32_t level) const override {
+  uint32_t calculateStatValue(uint32_t level) const override {
     return level * 2;
   }
 };
+
+class MockStatCurve2 : public RPG::StatCurve {
+public:
+  ~MockStatCurve2() override = default;
+
+  uint32_t calculateStatValue(uint32_t level) const override {
+    return getStat() * level;
+  }
+};
+
+TEST_CASE( "Stat Curve Meta", "[rpg-model]") {
+  auto &registry = RPG::StatRegistry::getInstance();
+
+  CHECK_THROWS(registry.registerStatCurve("MockStatCurve1", [](uint8_t stat) { return std::make_unique<MockStatCurve1>(stat); }));
+
+  auto statCurve = registry.createStatCurve("MockStatCurve1", 2);
+  REQUIRE(statCurve->getStat() == 2);
+  REQUIRE(statCurve->calculateStatValue(5) == 10);
+
+  std::map<uint8_t, std::unique_ptr<RPG::StatCurve>> curveList;
+  for (uint8_t i = 0; i < 8; i++)
+    curveList.emplace(i, registry.createStatCurve("MockStatCurve2", i));
+
+  REQUIRE(curveList[RPG::HP]->getStat() == 0);
+  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 0);
+
+  REQUIRE(curveList[RPG::MP]->getStat() == 1);
+  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 4);
+
+  REQUIRE(curveList[RPG::Atk]->getStat() == 2);
+  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 8);
+
+  REQUIRE(curveList[RPG::Def]->getStat() == 3);
+  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 12);
+
+  REQUIRE(curveList[RPG::Mag]->getStat() == 4);
+  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 16);
+
+  REQUIRE(curveList[RPG::Res]->getStat() == 5);
+  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 20);
+
+  REQUIRE(curveList[RPG::Spd]->getStat() == 6);
+  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 24);
+}
 
 TEST_CASE( "Hero Data", "[rpg-model]" ) {
   auto hero = std::make_shared<RPG::Hero>(1, "test", 3);
@@ -25,7 +70,7 @@ TEST_CASE( "Hero Data", "[rpg-model]" ) {
 
   std::map<uint8_t, std::unique_ptr<RPG::StatCurve>> curves;
   for (uint8_t i = 0; i < 8; i++) {
-    curves.emplace(i, std::make_unique<MockStatCurve>());
+    curves.emplace(i, std::make_unique<MockStatCurve1>(i));
   }
   RPG::StatBlock statBlock(std::move(curves));
 
@@ -50,7 +95,7 @@ TEST_CASE( "Class Data", "[rpg-model]" ) {
 
   std::map<uint8_t, std::unique_ptr<RPG::StatCurve>> curves;
   for (uint8_t i = 0; i < 8; i++) {
-    curves.emplace(i, std::make_unique<MockStatCurve>());
+    curves.emplace(i, std::make_unique<MockStatCurve1>(i));
   }
   RPG::StatBlock statBlock(std::move(curves));
 
