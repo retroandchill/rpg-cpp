@@ -78,7 +78,7 @@ TEST_CASE( "Stat Curve Meta", "[rpg-model]") {
 }
 
 TEST_CASE( "Hero Data", "[rpg-model]" ) {
-  auto hero = std::make_shared<RPG::Hero>(1, "test", 3);
+  auto hero = std::make_shared<RPG::Hero>(1, "test", 3, RPG::EquipmentList{ {0, 1}, {1, 2} });
   REQUIRE(hero->getId() == 1);
   REQUIRE(hero->getName() == "test");
   REQUIRE(hero->getClassId() == 3);
@@ -91,7 +91,7 @@ TEST_CASE( "Hero Data", "[rpg-model]" ) {
   }
   RPG::StatBlock statBlock(std::move(curves));
 
-  hero = std::make_shared<RPG::Hero>(2, "second", 4, std::move(statBlock));
+  hero = std::make_shared<RPG::Hero>(2, "second", 4, std::move(statBlock), RPG::EquipmentList{ {0, 1}, {1, 2} });
   REQUIRE(hero->getId() == 2);
   REQUIRE(hero->getName() == "second");
   REQUIRE(hero->getClassId() == 4);

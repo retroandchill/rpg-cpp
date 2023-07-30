@@ -5,13 +5,14 @@
 
 #include <stdexcept>
 
-RPG::Hero::Hero(size_t id, std::string_view name, size_t classId)
-    : CoreItem(id, name), m_classId(classId)
+RPG::Hero::Hero(size_t id, std::string_view name, size_t classId, EquipmentList &&startingEquipment)
+    : CoreItem(id, name), m_classId(classId), m_startingEquipment(std::move(startingEquipment))
 {
 }
 
-RPG::Hero::Hero(size_t id, std::string_view name, size_t classId, StatBlock &&statBlock)
-    : CoreItem(id, name), m_classId(classId), m_statBlock(std::move(statBlock))
+RPG::Hero::Hero(size_t id, std::string_view name, size_t classId, StatBlock &&statBlock,
+                EquipmentList &&startingEquipment)
+    : CoreItem(id, name), m_classId(classId), m_statBlock(std::move(statBlock)), m_startingEquipment(std::move(startingEquipment))
 {
 }
 
