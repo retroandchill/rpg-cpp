@@ -40,6 +40,7 @@ TEST_CASE( "Stat Curve Meta", "[rpg-model]") {
   CHECK_THROWS(registry.registerStatCurve("MockStatCurve1", [](uint8_t stat) { return std::make_unique<MockStatCurve1>(stat); }));
 
   auto statCurve = registry.createStatCurve("MockStatCurve1", 2);
+  REQUIRE(statCurve->getClassName() == "MockStatCurve1");
   REQUIRE(statCurve->getStat() == 2);
   REQUIRE(statCurve->calculateStatValue(5) == 10);
 
@@ -47,24 +48,31 @@ TEST_CASE( "Stat Curve Meta", "[rpg-model]") {
   for (uint8_t i = 0; i < 8; i++)
     curveList.emplace(i, registry.createStatCurve("MockStatCurve2", i));
 
+  REQUIRE(curveList[RPG::HP]->getClassName() == "MockStatCurve2");
   REQUIRE(curveList[RPG::HP]->getStat() == 0);
   REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 0);
 
+  REQUIRE(curveList[RPG::MP]->getClassName() == "MockStatCurve2");
   REQUIRE(curveList[RPG::MP]->getStat() == 1);
   REQUIRE(curveList[RPG::MP]->calculateStatValue(4) == 4);
 
+  REQUIRE(curveList[RPG::Atk]->getClassName() == "MockStatCurve2");
   REQUIRE(curveList[RPG::Atk]->getStat() == 2);
   REQUIRE(curveList[RPG::Atk]->calculateStatValue(4) == 8);
 
+  REQUIRE(curveList[RPG::Def]->getClassName() == "MockStatCurve2");
   REQUIRE(curveList[RPG::Def]->getStat() == 3);
   REQUIRE(curveList[RPG::Def]->calculateStatValue(4) == 12);
 
+  REQUIRE(curveList[RPG::Mag]->getClassName() == "MockStatCurve2");
   REQUIRE(curveList[RPG::Mag]->getStat() == 4);
   REQUIRE(curveList[RPG::Mag]->calculateStatValue(4) == 16);
 
+  REQUIRE(curveList[RPG::Res]->getClassName() == "MockStatCurve2");
   REQUIRE(curveList[RPG::Res]->getStat() == 5);
   REQUIRE(curveList[RPG::Res]->calculateStatValue(4) == 20);
 
+  REQUIRE(curveList[RPG::Spd]->getClassName() == "MockStatCurve2");
   REQUIRE(curveList[RPG::Spd]->getStat() == 6);
   REQUIRE(curveList[RPG::Spd]->calculateStatValue(4) == 24);
 }
