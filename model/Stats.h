@@ -6,10 +6,10 @@
 #include "RPG_global.h"
 
 #include <cstdint>
+#include <functional>
 #include <map>
 #include <memory>
 #include <string>
-#include <functional>
 
 namespace RPG
 {
@@ -61,7 +61,8 @@ namespace RPG
         virtual const StatBlock &getStatBlock() const = 0;
     };
 
-    class RPG_API StatRegistry {
+    class RPG_API StatRegistry
+    {
       private:
         StatRegistry();
 
@@ -78,5 +79,19 @@ namespace RPG
     };
 } // namespace RPG
 
-#define DECLARE_STAT_CURVE private: static std::string_view s_className; public: std::string_view getClassName() const override; private:
-#define IMPLEMENT_STAT_CURVE(Curve) std::string_view Curve::s_className = RPG::StatRegistry::getInstance().registerStatCurve(#Curve, [](uint8_t stat) { return std::make_unique<Curve>(stat); }); std::string_view Curve::getClassName() const { return s_className; }
+#define DECLARE_STAT_CURVE                                                                         \
+  private:                                                                                         \
+    static std::string_view s_className;                                                           \
+                                                                                                   \
+  public:                                                                                          \
+    std::string_view getClassName() const override;                                                \
+                                                                                                   \
+  private:
+
+#define IMPLEMENT_STAT_CURVE(Curve)                                                                \
+    std::string_view Curve::s_className = RPG::StatRegistry::getInstance().registerStatCurve(      \
+        #Curve, [](uint8_t stat) { return std::make_unique<Curve>(stat); });                       \
+    std::string_view Curve::getClassName() const                                                   \
+    {                                                                                              \
+        return s_className;                                                                        \
+    }
