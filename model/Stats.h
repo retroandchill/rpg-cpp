@@ -11,16 +11,14 @@
 
 namespace RPG
 {
-    enum class Stat : uint8_t
-    {
-        HP = 0,
-        MP = 1,
-        Atk = 2,
-        Def = 3,
-        Mag = 4,
-        Res = 5,
-        Spd = 6
-    };
+
+    constexpr uint8_t HP = 0;
+    constexpr uint8_t MP = 1;
+    constexpr uint8_t Atk = 2;
+    constexpr uint8_t Def = 3;
+    constexpr uint8_t Mag = 4;
+    constexpr uint8_t Res = 5;
+    constexpr uint8_t Spd = 6;
 
     class RPG_API StatCurve
     {
