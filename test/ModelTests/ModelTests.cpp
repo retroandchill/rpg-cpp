@@ -7,6 +7,8 @@
 #include "Class.h"
 
 class MockStatCurve1 : public RPG::StatCurve {
+  DECLARE_STAT_CURVE
+
 public:
   explicit MockStatCurve1(uint8_t stat) : RPG::StatCurve(stat) {}
   ~MockStatCurve1() override = default;
@@ -16,14 +18,21 @@ public:
   }
 };
 
+IMPLEMENT_STAT_CURVE(MockStatCurve1)
+
 class MockStatCurve2 : public RPG::StatCurve {
+  DECLARE_STAT_CURVE
+
 public:
+  explicit MockStatCurve2(uint8_t stat) : RPG::StatCurve(stat) {}
   ~MockStatCurve2() override = default;
 
   uint32_t calculateStatValue(uint32_t level) const override {
     return getStat() * level;
   }
 };
+
+IMPLEMENT_STAT_CURVE(MockStatCurve2)
 
 TEST_CASE( "Stat Curve Meta", "[rpg-model]") {
   auto &registry = RPG::StatRegistry::getInstance();
@@ -42,22 +51,22 @@ TEST_CASE( "Stat Curve Meta", "[rpg-model]") {
   REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 0);
 
   REQUIRE(curveList[RPG::MP]->getStat() == 1);
-  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 4);
+  REQUIRE(curveList[RPG::MP]->calculateStatValue(4) == 4);
 
   REQUIRE(curveList[RPG::Atk]->getStat() == 2);
-  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 8);
+  REQUIRE(curveList[RPG::Atk]->calculateStatValue(4) == 8);
 
   REQUIRE(curveList[RPG::Def]->getStat() == 3);
-  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 12);
+  REQUIRE(curveList[RPG::Def]->calculateStatValue(4) == 12);
 
   REQUIRE(curveList[RPG::Mag]->getStat() == 4);
-  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 16);
+  REQUIRE(curveList[RPG::Mag]->calculateStatValue(4) == 16);
 
   REQUIRE(curveList[RPG::Res]->getStat() == 5);
-  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 20);
+  REQUIRE(curveList[RPG::Res]->calculateStatValue(4) == 20);
 
   REQUIRE(curveList[RPG::Spd]->getStat() == 6);
-  REQUIRE(curveList[RPG::HP]->calculateStatValue(4) == 24);
+  REQUIRE(curveList[RPG::Spd]->calculateStatValue(4) == 24);
 }
 
 TEST_CASE( "Hero Data", "[rpg-model]" ) {

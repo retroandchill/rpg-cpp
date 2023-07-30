@@ -68,10 +68,13 @@ namespace RPG
 
         static StatRegistry &getInstance();
 
-        void registerStatCurve(std::string_view key, const CurveCreator &creatorFunction);
+        std::string_view registerStatCurve(std::string_view key, const CurveCreator &creator);
         std::unique_ptr<RPG::StatCurve> createStatCurve(std::string_view key, uint8_t stat) const;
 
       private:
         std::map<std::string, CurveCreator, std::less<>> m_registeredCurves;
     };
 } // namespace RPG
+
+#define DECLARE_STAT_CURVE static std::string_view s_className;
+#define IMPLEMENT_STAT_CURVE(Curve) std::string_view Curve::s_className = RPG::StatRegistry::getInstance().registerStatCurve(#Curve, [](uint8_t stat) { return std::make_unique<Curve>(stat); });

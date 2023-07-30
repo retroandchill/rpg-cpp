@@ -40,11 +40,12 @@ RPG::StatRegistry &RPG::StatRegistry::getInstance()
     return registry;
 }
 
-void RPG::StatRegistry::registerStatCurve(std::string_view key,
-                                          const RPG::StatRegistry::CurveCreator &creatorFunction)
+std::string_view RPG::StatRegistry::registerStatCurve(std::string_view key, const RPG::StatRegistry::CurveCreator &creator)
 {
-    auto [it, inserted] = m_registeredCurves.try_emplace(std::string(key), creatorFunction);
-    if (!inserted)
+    auto [it, inserted] = m_registeredCurves.try_emplace(std::string(key), creator);
+    if (inserted)
+        return it->first;
+    else
         throw std::invalid_argument(std::string("The stat curve class ") + key.data() + " has already been registered!");
 }
 
